@@ -26,7 +26,8 @@ const command = (conn: DAVRC_Connection, cmd: string) =>
   (done:() => void) => conn.writable.write (`${cmd}\r`, done)
 const enqueue = (conn: DAVRC_Connection, cmd: string) =>
   conn.queue.push (command (conn, cmd))
-const filterCommands = (key: string) =>
+const filterCommand = ([key, val]: [string, any]) =>
+  typeof val === 'string' &&
   PROBABLE_KEY_REGEX.test (key)
 
 export async function main () {
@@ -44,7 +45,7 @@ export async function main () {
 
   const raw_entries = Object.entries (opts)
   const entries: [string, any][] = raw_entries
-    .filter (([_, v]) => typeof v === 'string')
+    .filter (filterCommand)
 
   if (! entries.length)
     usage (2, 'No commands given')
@@ -65,12 +66,11 @@ export async function main () {
     const enqueueCommand = ([key, val]: [string, string]) =>
       enqueue (conn , `${key}${val}`)
 
-    for (let i = 0; i < entries.length; i++)
-      if (filterCommands (entries[i][0]))
-        enqueueCommand (entries[i])
+    entries.forEach (entry => enqueueCommand (entry))
   }
   catch (err) {
     console.error (err.message)
+    process.exit (1)
   }
 
 }
