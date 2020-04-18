@@ -14,46 +14,41 @@ davrc --help
 
 *The example commands below are not guaranteed to work for your AVR equipment. Consult the relevant documentation available for your AVR equipment.*
 
-Get main zone channel volume state
+Display main zone channel volume state
 ```bash
-davrc --host <host> --CV ?
+davrc --host <host> --CV?
 ```
 
-Turn up the main zone master volume by a step
+Display zone 2 channel volume state
 ```bash
-davrc --host <host> --MV UP
+davrc --host <host> --Z2CV?
 ```
 
-Turn up the zone 2 master volume by a step
+Turn up main zone master volume by a step
 ```bash
-davrc --host <host> --Z2 UP
+davrc --host <host> --MVUP
+```
+
+Turn up zone 2 master volume by a step
+```bash
+davrc --host <host> --Z2UP
 ```
 
 Turn up the main zone front left channel volume by a step
 ```bash
-davrc --host <host> --CV FL UP
-```
-
-or...
-```bash
-davrc --host <host> --CV 'FL UP'
+davrc --host <host> --CVFL UP
 ```
 
 Turn up the main zone and zone 2 front left channel volume by a step
 ```bash
-davrc --host <host> --CV FL UP --Z2 FL UP
-```
-
-or...
-```bash
-davrc --host <host> --CV 'FL UP' --Z2 'FL UP'
+davrc --host <host> --CVFL UP --Z2CVFL UP
 ```
 
 Set host environment variable for command 
 ```bash
 # Get main zone on/off state
 
-DAVRC_HOST=<host> davrc --ZM ?
+DAVRC_HOST=<host> davrc --ZM?
 ```
 
 Set host environment variable for terminal session 
@@ -62,9 +57,9 @@ Set host environment variable for terminal session
 
 export DAVRC_HOST=<host>
 
-davrc --ZM ?
-davrc --Z2 ?
-davrc --ZM ? --Z2 ?
+davrc --ZM?
+davrc --Z2?
+davrc --ZM? --Z2?
 ```
 
 # Notice

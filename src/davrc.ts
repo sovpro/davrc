@@ -4,7 +4,7 @@ import {GazillionthQueue} from '@sovpro/gazillionth-queue'
 import zclopts from '@sovpro/zclopts'
 import {Socket} from 'net'
 
-const PROBABLE_KEY_REGEX = /^[A-Z0-9]{2,}$/
+const PROBABLE_KEY_REGEX = /^[A-Z0-9]{2,}\??$/
 const ENV_HOST_PROP = 'DAVRC_HOST'
 const ENV_PORT_PROP = 'DAVRC_PORT'
 
@@ -27,7 +27,6 @@ const command = (conn: DAVRC_Connection, cmd: string) =>
 const enqueue = (conn: DAVRC_Connection, cmd: string) =>
   conn.queue.push (command (conn, cmd))
 const filterCommand = ([key, val]: [string, any]) =>
-  typeof val === 'string' &&
   PROBABLE_KEY_REGEX.test (key)
 
 export async function main () {
@@ -64,7 +63,7 @@ export async function main () {
     conn.queue.once ('done', onceDone)
 
     const enqueueCommand = ([key, val]: [string, string]) =>
-      enqueue (conn , `${key}${val}`)
+      enqueue (conn , val ? `${key} ${val}` : key)
 
     entries.forEach (entry => enqueueCommand (entry))
   }
@@ -77,7 +76,7 @@ export async function main () {
 
 function usage (code = 0, message?: string) {
   if (message) console.log (`${message}\n`)
-  console.log ('Usage: davrc [--host] --CMD <string> [...<string>] [...--CMD <string> [...<string>]]')
+  console.log ('Usage: davrc [--host] --CMD [...<string>] [...--CMD [...<string>]]')
   console.log ('  Required: --host or set DAVRC_HOST')
   console.log ('  Optional: --port or set DAVRC_PORT')
   process.exit (code)

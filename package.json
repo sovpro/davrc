@@ -1,6 +1,6 @@
 {
   "name": "@sovpro/davrc",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.4",
   "description": "A command-line utility to send control protocol commands to a Denon AVR",
   "main": "dist/davrc",
   "repository": {
