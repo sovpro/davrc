@@ -33,8 +33,7 @@ export async function main () {
 
   const opts = zclopts (process.argv.slice (2))
 
-  if ((opts.hasOwnProperty ('h') && opts.h) ||
-      opts.hasOwnProperty ('help'))
+  if ((opts.get ('h')) || opts.has ('help'))
     usage (0)
 
   const { host, port } = getHost (opts)
@@ -42,8 +41,7 @@ export async function main () {
   if (host === undefined) 
     usage (2, 'Missing host value')
 
-  const raw_entries = Object.entries (opts)
-  const entries: [string, any][] = raw_entries
+  const entries: [string, any][] = Array.from (opts.entries ())
     .filter (filterCommand)
 
   if (! entries.length)
@@ -82,23 +80,21 @@ function usage (code = 0, message?: string) {
   process.exit (code)
 }
 
-function getHost (opts: { host?: string, port?: any }):
+function getHost (opts: Map<string, any>):
   { host: string | undefined, port: number }
 {
-  let host = undefined
+  let host = opts.get ('host')
   let port = undefined
   
   const env = typeof process === 'object' &&
               typeof process.env === 'object' &&
               process.env
 
-  if (opts.hasOwnProperty ('host'))
-    host = opts.host
-  else if (env && env.hasOwnProperty (ENV_HOST_PROP))
+  if (!host && env && env.hasOwnProperty (ENV_HOST_PROP))
     host = env[ENV_HOST_PROP]
 
-  if (opts.hasOwnProperty ('port'))
-    port = +(opts.port || 0)
+  if (opts.get ('port'))
+    port = +(opts.get ('port') || 0)
 
   if (!port && env && env.hasOwnProperty (ENV_PORT_PROP))
     port = +(env[ENV_PORT_PROP] || 0)

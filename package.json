@@ -1,6 +1,6 @@
 {
   "name": "@sovpro/davrc",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0",
   "description": "A command-line utility to send control protocol commands to a Denon AVR",
   "main": "dist/davrc",
   "repository": {
@@ -30,8 +30,8 @@
   "types": "dist/davrc.d.ts",
   "dependencies": {
     "@sovpro/delimited-stream": "^1.0.5",
-    "@sovpro/gazillionth-queue": "^1.3.0",
+    "@sovpro/gazillionth-queue": "^1.3.2",
     "@sovpro/promise-connect": "^1.1.1",
-    "@sovpro/zclopts": "^1.0.0-beta.3"
+    "@sovpro/zclopts": "^1.0.0"
   }
 }

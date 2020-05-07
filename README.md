@@ -2,8 +2,6 @@
 
 A command-line utility to send control protocol commands to a Denon AVR.
 
-BETA
-
 ```bash
 npm i -g @sovpro/davrc
 
