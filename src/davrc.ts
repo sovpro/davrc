@@ -15,7 +15,7 @@ class DAVRC_Connection {
   constructor (socket: Socket) {
     this.writable = socket
     this.readable = new DelimitedStream ("\r")
-    this.queue = new GazillionthQueue ({active_wait: 50})
+    this.queue = new GazillionthQueue ({active_wait: 100})
     this.writable.pipe (this.readable)
   }
 }
